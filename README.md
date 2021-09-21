@@ -1,1 +1,1 @@
-# Test for "github". Works are with files
+# Tests. Works are with files
