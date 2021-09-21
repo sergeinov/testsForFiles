@@ -4,6 +4,8 @@ import com.codeborne.pdftest.PDF;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.xlstest.XLS;
 import net.lingala.zip4j.ZipFile;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -11,6 +13,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 import java.util.Scanner;
 import java.util.zip.ZipInputStream;
 
@@ -109,6 +112,23 @@ public class TestsFiles {
             zipFile.setPassword(pass);
         }
 
+    }
+
+    @Test
+    void parseDocxTest() throws Exception {
+        try (InputStream stream = getClass().getClassLoader().getResourceAsStream("docxTestData.docx")) {
+            StringBuilder resultText = new StringBuilder();
+            XWPFDocument document = new XWPFDocument(stream);
+
+            List<XWPFParagraph> paragraphs = document.getParagraphs();
+            for (XWPFParagraph data : paragraphs) {
+                resultText.append(data.getText());
+                System.out.println(resultText);
+            }
+
+            assertThat(resultText.toString())
+                    .contains("Hello tester!");
+        }
     }
 
 }
