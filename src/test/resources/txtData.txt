@@ -1,0 +1,5 @@
+Hello tester!!!
+
+This is a file which helps you test.
+
+Don't give up!
