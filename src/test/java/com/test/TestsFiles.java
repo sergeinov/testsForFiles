@@ -15,6 +15,7 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Scanner;
+import java.util.zip.ZipException;
 import java.util.zip.ZipInputStream;
 
 import static com.codeborne.selenide.Condition.text;
@@ -104,13 +105,24 @@ public class TestsFiles {
     }
 
     @Test
-    public void parseZipWithPassTest() throws Exception {
+    public void parseZipWithPassTest() throws Exception, ZipException {
         char[] pass = {'t', 'e', 's', 't', 'P', 'a', 's', 's',};
-        ZipFile zipFile = new ZipFile("zipDataWithPass.zip");
+        String sourcePath = "src/test/resources/zipDataWithPass.zip";
+        String destinationPath = "./src/test/resources/";
 
-        if (zipFile.isEncrypted()) {                            // doesn't work
-            zipFile.setPassword(pass);
+        ZipFile zipFile = new ZipFile(sourcePath);
+        try {
+            if (zipFile.isEncrypted()) {                            // not to go into
+                zipFile.setPassword(pass);
+                zipFile.extractAll(destinationPath);
+                assertThat(zipFile.getFileHeaders().get(1).toString()).contains("Don't give up!");
+            }
+        } catch (Exception e) {
+            System.out.println("Error");
         }
+
+
+
 
     }
 
