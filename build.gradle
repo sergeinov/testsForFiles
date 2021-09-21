@@ -30,7 +30,10 @@ dependencies {
     // For Junit 5
     testImplementation('org.junit.jupiter:junit-jupiter-api:5.8.0',
             'org.aspectj:aspectjweaver:1.9.7',
-            'org.assertj:assertj-core:3.19.0')
+            "com.codeborne:pdf-test:1.6.1",                                 // for Pdf files
+            "com.codeborne:xls-test:1.4.3",                                 // for xlsx files
+            "com.opencsv:opencsv:5.3",                                      // for csv files
+            'org.assertj:assertj-core:3.19.0')                              // for asserts checks
     testRuntimeOnly('org.junit.jupiter:junit-jupiter-engine:5.8.0')
 }
 
