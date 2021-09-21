@@ -40,7 +40,6 @@ public class TestsFiles {
                     .contains("Selenide = UI Testing Framework powered by Selenium WebDriver");
         }
 
-
     }
 
     @Test
@@ -103,15 +102,13 @@ public class TestsFiles {
 
     @Test
     public void parseZipWithPassTest() throws Exception {
-        char[] pass = {'t','e','s','t','P','a','s','s',};
+        char[] pass = {'t', 'e', 's', 't', 'P', 'a', 's', 's',};
         ZipFile zipFile = new ZipFile("zipDataWithPass.zip");
 
         if (zipFile.isEncrypted()) {                            // doesn't work
             zipFile.setPassword(pass);
         }
 
-
     }
-
 
 }
