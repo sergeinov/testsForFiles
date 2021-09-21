@@ -3,6 +3,7 @@ package com.test;
 import com.codeborne.pdftest.PDF;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.xlstest.XLS;
+import net.lingala.zip4j.ZipFile;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -54,13 +55,13 @@ public class TestsFiles {
     @Test
     public void parseTxtTest() throws Exception {
         String result;
-            try (InputStream stream = getClass().getClassLoader().getResourceAsStream("txtData.txt")) {            // read .txt file
-                result = new String(stream.readAllBytes(), StandardCharsets.UTF_8);
+        try (InputStream stream = getClass().getClassLoader().getResourceAsStream("txtData.txt")) {            // read .txt file
+            result = new String(stream.readAllBytes(), StandardCharsets.UTF_8);
 
-                assertThat(result)
-                        .startsWith("H")
-                        .contains("Don't give up!");
-            }
+            assertThat(result)
+                    .startsWith("H")
+                    .contains("Don't give up!");
+        }
     }
 
     @Test
@@ -99,13 +100,18 @@ public class TestsFiles {
             }
         }
     }
+
     @Test
-    public void parseZip2Test() throws Exception {
-        ZipFile zipFile = new ZipFile("example.zip");
-        if (zipFile.isEncrypted())
-            zipFile.setPassword("mypassword");
-        zipFile.extractAll("folder/destination");
+    public void parseZipWithPassTest() throws Exception {
+        char[] pass = {'t','e','s','t','P','a','s','s',};
+        ZipFile zipFile = new ZipFile("zipDataWithPass.zip");
+
+        if (zipFile.isEncrypted()) {                            // doesn't work
+            zipFile.setPassword(pass);
         }
+
+
     }
+
 
 }
