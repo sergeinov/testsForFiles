@@ -1,1 +1,1 @@
-# testsForFiles
+# Test for "github". Works are with files
