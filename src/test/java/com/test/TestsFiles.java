@@ -32,20 +32,21 @@ public class TestsFiles {
         String result;
         open("https://github.com/selenide/selenide/blob/master/README.md");
         File download = $("#raw-url").download();
-
-        try (InputStream is = new FileInputStream(download)) {                                          // read file
+        try (InputStream is = new FileInputStream(download)) {                                                          // read downloaded file
             result = new String(is.readAllBytes(), StandardCharsets.UTF_8);
-            is.close();
+
+            assertThat(result)
+                    .contains("Selenide = UI Testing Framework powered by Selenium WebDriver");
         }
-        assertThat(result)
-                .contains("Selenide = UI Testing Framework powered by Selenium WebDriver");
+
+
     }
 
     @Test
     public void UploadFileTest() {
         open("http://www.csm-testcenter.org/test?do=show&subdo=common&test=file_upload");
         $("#item input[type='file']").uploadFromClasspath("txtData.txt");
-        // $("#item input[type='file']").uploadFile(new File("src/test/resources/txtData.txt"));       // second way
+        // $("#item input[type='file']").uploadFile(new File("src/test/resources/txtData.txt"));                        // second way to upload
         $("#item  #button").click();
         $("#content").shouldHave(text("File Upload Finished"));
     }
@@ -53,18 +54,20 @@ public class TestsFiles {
     @Test
     public void parseTxtTest() throws Exception {
         String result;
-            try (InputStream stream = getClass().getClassLoader().getResourceAsStream("txtData.txt")) {                                          // read file
+            try (InputStream stream = getClass().getClassLoader().getResourceAsStream("txtData.txt")) {            // read .txt file
                 result = new String(stream.readAllBytes(), StandardCharsets.UTF_8);
-                assertThat(result).contains("Don't give up!");
-                assertThat(result).startsWith("H");
+
+                assertThat(result)
+                        .startsWith("H")
+                        .contains("Don't give up!");
             }
-        System.out.println();
     }
 
     @Test
     public void parsePdfTest() throws Exception {
-        try (InputStream stream = getClass().getClassLoader().getResourceAsStream("pdfData.pdf")) {
+        try (InputStream stream = getClass().getClassLoader().getResourceAsStream("pdfData.pdf")) {                // read .pdf file
             PDF parsed = new PDF(stream);
+
             assertThat(parsed.author)
                     .contains("sammy_lee12");
             assertThat(parsed.title)
@@ -73,9 +76,10 @@ public class TestsFiles {
     }
 
     @Test
-    public void parseXlsTest() throws Exception {
-        try (InputStream stream = getClass().getClassLoader().getResourceAsStream("excelData.xlsx")) {
+    public void parseXlsxTest() throws Exception {
+        try (InputStream stream = getClass().getClassLoader().getResourceAsStream("excelData.xlsx")) {             // read .xlsx file
             XLS parsed = new XLS(stream);
+
             assertThat(parsed.excel.getSheetAt(0).getRow(5).getCell(1).getStringCellValue())
                     .isEqualTo("West");
             assertThat(parsed.excel.getSheetAt(0).getRow(5).getCell(4).getNumericCellValue())
@@ -85,7 +89,7 @@ public class TestsFiles {
 
     @Test
     public void parseZipTest() throws Exception {
-        try (InputStream stream = getClass().getClassLoader().getResourceAsStream("zipData.zip")) {
+        try (InputStream stream = getClass().getClassLoader().getResourceAsStream("zipData.zip")) {                // read .zip file
             ZipInputStream zipStream = new ZipInputStream(stream);
             zipStream.getNextEntry();
             Scanner scan = new Scanner(zipStream);
