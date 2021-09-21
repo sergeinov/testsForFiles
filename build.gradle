@@ -32,8 +32,10 @@ dependencies {
             'org.aspectj:aspectjweaver:1.9.7',
             "com.codeborne:pdf-test:1.6.1",                                 // for Pdf files
             "com.codeborne:xls-test:1.4.3",                                 // for xlsx files
-            "com.opencsv:opencsv:5.3",                                      // for csv files
-            'org.assertj:assertj-core:3.19.0')                              // for asserts checks
+            'com.opencsv:opencsv:5.5.2',                                    // for csv files
+            'org.assertj:assertj-core:3.20.2',                              // for asserts checks
+            'net.lingala.zip4j:zip4j:2.9.0'                                 // for zip with password
+    )
     testRuntimeOnly('org.junit.jupiter:junit-jupiter-engine:5.8.0')
 }
 

@@ -99,5 +99,13 @@ public class TestsFiles {
             }
         }
     }
+    @Test
+    public void parseZip2Test() throws Exception {
+        ZipFile zipFile = new ZipFile("example.zip");
+        if (zipFile.isEncrypted())
+            zipFile.setPassword("mypassword");
+        zipFile.extractAll("folder/destination");
+        }
+    }
 
 }
